@@ -6,5 +6,6 @@ flask-selfdoc==1.2.3
 flask-cors
 
 Jinja2==3.0.1
-flask-restplus
 Werkzeug>=2.0
+
+flask-swagger-ui===4.11.1

@@ -4,6 +4,11 @@ import sqlite3 as db
 
 app = Flask(__name__)
 
+# Perform all database operations
+# All function follow the same pattern :
+#   - SQl query
+#   - Get the cursor and execute the query with the data/task provided
+#   - Return data (either a bool, the id of the stack, or the data inserted)
 
 class DB_Service:
 

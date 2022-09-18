@@ -1,0 +1,478 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Reverse Polish notation calculator via API",
+    "version": "1.0.0",
+    "title": "RPN_api",
+  },
+  "servers": [
+    {
+      "url": "/"
+    }
+  ],
+
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "Default url"
+        ],
+        "summary": "Returns Hello RPN",
+        "responses": {
+          "200": {
+            "description": "OK",
+
+          }
+        }
+      },
+    },
+
+    "/rpm/create_stack": {
+
+      "post": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "Create a new stack",
+
+
+        "requestBody": {
+          "description": "New stack Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/create_stack"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                   "items":{
+                       "$ref": "#/components/schemas/stack_object"
+                   }
+
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error."
+          },
+        }
+      },
+
+    },
+
+    "/rpm/list_stacks": {
+
+      "get": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "List all stacks",
+
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                   "items":{
+                       "$ref": "#/components/schemas/stack_object"
+                   }
+
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error."
+          },
+        }
+      },
+
+    },
+
+    "/rpm/get_stack/{stack_id}": {
+
+      "get": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "Get a specific stack",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stack_id",
+            "required": true,
+            "description": "Id of the stack you are looking for ",
+            "schema": {
+              "$ref": "#/components/schemas/stack_id"
+            }
+          }
+        ],
+
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                   "items":{
+                       "$ref": "#/components/schemas/stack_object"
+                   }
+
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found."
+          },
+        }
+      },
+
+    },
+
+
+    "/rpm/add_to_stack/{stack_id}": {
+
+      "post": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "Add operands to the stack",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stack_id",
+            "required": true,
+            "description": "Id of the stack you are looking to add operands to ",
+            "schema": {
+              "$ref": "#/components/schemas/stack_id"
+            }
+          }
+        ],
+
+
+        "requestBody": {
+          "description": "Operands to add to the stack, you can add as much number as you like, they must be separated by a space",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/operand"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                   "items":{
+                       "$ref": "#/components/schemas/stack_object"
+                   }
+
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found."
+          },
+        }
+      },
+
+    },
+
+    "/rpm/execute_operation/{stack_id}": {
+
+      "post": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "Execute an operation on the stack selected",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stack_id",
+            "required": true,
+            "description": "Id of the stack you are looking to perform an operation on ",
+            "schema": {
+              "$ref": "#/components/schemas/stack_id"
+            }
+          }
+        ],
+
+
+        "requestBody": {
+          "description": "Operations you want to perform, supported operations are +, -, *, /, //, % . You can perform several operation in one request by separating them by a space",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/operation"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                   "items":{
+                       "$ref": "#/components/schemas/stack_object"
+                   }
+
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found."
+          },
+          "400": {
+            "description": "Not enough operands or Operator not suported."
+          },
+        }
+      },
+
+    },
+
+
+    "/rpm/delete_stack/{stack_id}": {
+
+      "delete": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "Delete a specific task",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stack_id",
+            "required": true,
+            "description": "Id of the stack you are looking to delete ",
+            "schema": {
+              "$ref": "#/components/schemas/stack_id"
+            }
+          }
+        ],
+
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "Stack was deleted",
+
+          },
+          "404": {
+            "description": "ID not found."
+          },
+        }
+      },
+
+    },
+
+    "/rpm/update_stack_name/{stack_id}": {
+
+      "post": {
+        "tags": [
+          "Stack Manipulation"
+        ],
+        "summary": "change the name of the selected stack",
+
+        "parameters": [
+          {
+            "in": "path",
+            "name": "stack_id",
+            "required": true,
+            "description": "Id of the stack for which you want to update the name ",
+            "schema": {
+              "$ref": "#/components/schemas/stack_id"
+            }
+          }
+        ],
+
+
+        "requestBody": {
+          "description": "New name value",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/stack_name"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+
+
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                   "items":{
+                       "$ref": "#/components/schemas/stack_object"
+                   }
+
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "ID not found."
+          },
+
+        }
+      },
+
+    },
+
+
+  },
+
+  "components": {
+    "schemas": {
+
+        "stack_id": {
+          "properties": {
+            "stack_id": {
+              "type": "string",
+              "format": "string",
+              "example": "145"
+            }
+          }
+        },
+
+        "operand": {
+          "properties": {
+            "value": {
+              "type": "string",
+              "format": "string",
+              "example": "4 7 9"
+            }
+          }
+        },
+
+        "operation": {
+          "properties": {
+            "value": {
+              "type": "string",
+              "format": "string",
+              "example": "+ - *"
+            }
+          }
+        },
+
+        "stack_name": {
+          "properties": {
+            "value": {
+              "type": "string",
+              "format": "string",
+              "example": "And now for something completely different"
+            }
+          }
+        },
+
+        "create_stack": {
+          "type": "object",
+          "properties": {
+            "operation": {
+              "type": "string",
+              "format": "string",
+              "example": "2 4 6"
+            },
+            "name": {
+              "type": "string",
+              "format": "string",
+              "example": "Life of Brian"
+            }
+          }
+        },
+
+      "stack_object": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "string",
+            "example": "145"
+          },
+          "name": {
+            "type": "string",
+            "format": "string",
+            "example": "The Holy Grail"
+          },
+          "operation": {
+            "type": "array",
+            "items": {
+                "type":"string"
+            },
+            "example": "[2, 4, 6]"
+          },
+          "Timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2022-09-18 16:19:31"
+          }
+        }
+      },
+
+    }
+  }
+}

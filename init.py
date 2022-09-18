@@ -11,14 +11,14 @@ def create_app():
 
     #Add conf here
 
+    #Setup the api blueprint
     from api import api as api_blueprint
     app.register_blueprint(api_blueprint)
 
-    from doc.doc import doc as doc_blueprint
-    app.register_blueprint(doc_blueprint)
-
+    # Connect to db
     conn = db.connect('rpm.db')
 
+    # Create table if it doesn't exist in db
     op_table = """ CREATE TABLE IF NOT EXISTS Operations (
                                         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                                         name TEXT,

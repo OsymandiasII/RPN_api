@@ -1,5 +1,7 @@
 import json
 
+# This file is used to add functions that are usefull but don't belong to a specific part of the program
+
 
 def display_stacks(stacks):
     data = []
