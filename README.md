@@ -12,9 +12,10 @@
 
 ### To setup 
 
-#### Socket
+#### Host and port
 
-Open run.sh file and change the address/socket value after the --socket argument
+Open run.sh file and change the host/port value after the --socket argument
+Open the wsgi.py file and do the same changes on line 5 for the host and port
 
 ### Swagger
 
