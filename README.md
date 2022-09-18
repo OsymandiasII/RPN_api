@@ -1,8 +1,8 @@
 # RPN_api
-##Reverse Polish notation calculator via API
+## Reverse Polish notation calculator via API
 
 ### Requirements 
-- uxix like system 
+- unix like system 
 - Python 3 
 - pip3
 
@@ -18,4 +18,4 @@ Open run.sh file and change the address/socket value after the --socket argument
 
 ### Swagger
 
-The swagger api documentation can be found ar ``` /swagger ```
+The swagger api documentation can be found at ``` /swagger ```
